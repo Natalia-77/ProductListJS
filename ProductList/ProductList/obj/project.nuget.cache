@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "RhPxo9VHDuxtzttsUhAMdVGvR7cS1ajcHWFv6NzcGpxOPTgbQARQBqFshGAiLbfnqsLuPvVedbKuOV1TbC1p1A==",
+  "dgSpecHash": "E7ZE0orYrzmFu8yoDfloiyKNh3fcKpo0AAushjfkcX37UxBqR3hdAo/0MsK6Xx87c01BKDPVKS0FrG9/fiIEQw==",
   "success": true,
-  "projectFilePath": "D:\\Natalia\\Project1\\ProductList\\ProductList\\ProductList.csproj",
+  "projectFilePath": "D:\\Natalia\\Project1\\ProductListJS\\ProductList\\ProductList\\ProductList.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
