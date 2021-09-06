@@ -1,10 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using ProductList.Domain;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,6 +27,8 @@ namespace ProductList
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<AppEFContext>(options =>
+               options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +47,21 @@ namespace ProductList
             app.UseRouting();
 
             app.UseAuthorization();
+
+            var dirName = "products";
+            var dirServer = Path.Combine(Directory.GetCurrentDirectory(), dirName);
+            if (!Directory.Exists(dirServer))
+            {
+                Directory.CreateDirectory(dirServer);
+            }
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(dirServer),
+                RequestPath = "/images"
+            });
+
+
 
             app.UseEndpoints(endpoints =>
             {

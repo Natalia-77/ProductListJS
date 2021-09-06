@@ -169,3 +169,4 @@ D:\Natalia\Project1\ProductListJS\ProductList\ProductList\obj\Debug\net5.0\Produ
 D:\Natalia\Project1\ProductListJS\ProductList\ProductList\obj\Debug\net5.0\ref\ProductList.dll
 D:\Natalia\Project1\ProductListJS\ProductList\ProductList\obj\Debug\net5.0\ProductList.pdb
 D:\Natalia\Project1\ProductListJS\ProductList\ProductList\obj\Debug\net5.0\ProductList.genruntimeconfig.cache
+D:\Natalia\Project1\ProductListJS\ProductList\ProductList\bin\Debug\net5.0\libman.json
