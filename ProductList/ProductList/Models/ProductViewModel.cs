@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using ProductList.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,6 +19,11 @@ namespace ProductList.Models
     public class ProductImageItemVM
     {
         public string Path { get; set; }
+    }
+
+    public class ProductImageToDelete
+    {
+       public List<ProductImage> productViewModels { get; set; }
     }
 
     public class AddProductViewModel

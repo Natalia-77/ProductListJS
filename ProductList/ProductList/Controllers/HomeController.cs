@@ -93,9 +93,17 @@ namespace ProductList.Controllers
         public IActionResult Deletee(int id)
         {
             var prodTodelete = _context.Products.FirstOrDefault(x => x.Id == id);
+
+            var result = _context.ProductImages.Where(c => c.ProductId == id).ToList();
+
+            ProductImageToDelete delete = new();
+
+            delete.productViewModels = result;
+            
+
             if (prodTodelete != null)
             {
-                return View(prodTodelete);
+                return View(delete);
             }
             return NotFound();
         }
@@ -105,7 +113,7 @@ namespace ProductList.Controllers
         {
             var imageDel = _context.ProductImages.FirstOrDefault(x => x.ProductId == id);
             var prodDel = _context.Products.FirstOrDefault(w => w.Id == id);
-            if (imageDel != null && imageDel != null)
+            if (imageDel != null && prodDel != null)
             {
             
 
