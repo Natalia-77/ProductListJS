@@ -1,28 +1,128 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using ProductList.Domain;
+using ProductList.Domain.Entities;
 using ProductList.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace ProductList.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        public AppEFContext _context { get; set; }
+        public HomeController(ILogger<HomeController> logger, AppEFContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var model = _context.Products
+                .Include(i => i.ProductImages)
+                .Select(x => new ProductViewModel
+                {
+                    Id=x.Id,
+                    Name = x.Name,
+                    Price = x.Price,
+                    Images = x.ProductImages.Select(t => new ProductImageItemVM
+                    {
+                        Path = "/images/" + t.Name
+                    }).ToList()
+                });
+
+            return View(model);
         }
 
+        #region Create
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(AddProductViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            Product product = new();
+            product.Name = model.Name;
+            product.Price = model.Price;
+
+            _context.Products.Add(product);
+            _context.SaveChanges();
+
+            List<ProductImage> images = new List<ProductImage>();
+
+            foreach (var item in model.Images)
+            {
+                string ext = Path.GetExtension(item.FileName);
+                string fileName = Path.GetRandomFileName() + ext;
+
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), "products", fileName);
+                using (var stream = System.IO.File.Create(filePath))
+                {
+                    item.CopyTo(stream);
+                }
+
+                ProductImage pImage = new ProductImage
+                {
+                    Name = fileName,
+                    Product = product
+                };
+                images.Add(pImage);
+            }
+            _context.ProductImages.AddRange(images);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+        #endregion
+
+        [HttpGet]
+        [ActionName("Delete")]
+        public IActionResult Deletee(int id)
+        {
+            var prodTodelete = _context.Products.FirstOrDefault(x => x.Id == id);
+            if (prodTodelete != null)
+            {
+                return View(prodTodelete);
+            }
+            return NotFound();
+        }
+
+        [HttpPost]       
+        public IActionResult Delete(int id)
+        {
+            var imageDel = _context.ProductImages.FirstOrDefault(x => x.ProductId == id);
+            var prodDel = _context.Products.FirstOrDefault(w => w.Id == id);
+            if (imageDel != null && imageDel != null)
+            {
+            
+
+                _context.ProductImages.Remove(imageDel);
+                _context.Products.Remove(prodDel);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return NotFound();
+        }
+
+
+
+
+
+
+        #region
         public IActionResult Privacy()
         {
             return View();
@@ -33,5 +133,6 @@ namespace ProductList.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        #endregion
     }
 }

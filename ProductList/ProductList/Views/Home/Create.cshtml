@@ -1,0 +1,155 @@
+﻿@model ProductList.Models.AddProductViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+@*<h1>Create</h1>*@
+
+<h4>Створення продукту</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Images" class="form-label">Фото</label>
+                <div class="row" id="contentImage">
+                    <div class="col-md-2">
+                        <img src="/img/addbtni.jpg"
+                             id="btnAddImage"
+                             style="cursor:pointer"
+                             width="100%" />
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group mt-5">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Styles{
+    <link href="~/css/style.css" rel="stylesheet" />
+
+ }
+
+@section Scripts{ 
+<script>
+    
+
+    window.addEventListener("load", async function () {
+        let id = 1;
+        $("#btnAddImage").on("click", function () {
+            let imageName = "image" + id;
+            id++;
+            let $file = $(`<input type="file" data-files style="display:none" multiple 
+                            class="form-control"
+                            id="${imageName}"
+                            name="images">`);
+            $("#contentImage").prepend($file);
+           
+            document.getElementById(imageName).click();
+            document.getElementById(imageName).onchange = function (e) {
+               
+                for (var i = 0; i < e.target.files.length; i++) {
+                    
+
+                   
+                    //let $fileName = $(`<div class="col-md-6">
+                    //              <span class="file-delete" style="transform: rotate(45deg)"><span>+</span></span>
+                    //            <img src="${URL.createObjectURL(e.target.files[i])}"
+                    //                 width="100%"/> </div>`);
+                    //$("#contentImage").prepend($fileName);
+
+                    let $div = $(`<div class="col-md-2">`);
+                    let $span = $(` <span class="file-delete" style="transform: rotate(45deg)"><span>+</span></span>`);
+                    let $content = $(`<img src="${URL.createObjectURL(e.target.files[i])}"
+                                     width="100%"/>`);
+                    $div.prepend($span);
+                    $div.prepend($content);
+                    $("#contentImage").prepend($div);
+
+                    $span.on('click', function (e) {
+                        e.preventDefault();
+                        $(this).closest("div").remove();
+                    });
+
+                   
+                }
+
+
+                
+               
+            };
+
+            
+            
+        });
+       
+        //let id = 1;
+        
+        //let btnAddImage = document.getElementById("btnAddImage");
+        //btnAddImage.on("click", function () {
+        //    let imageName = "image" + id;
+        //    id++;
+        //    let div = $(`<div class="col-md-2"></div>`);
+        //    let inputFile = $(`<input type="file" data-files style="display:none" multiple 
+        //                    class="form-control"
+        //                    id="${imageName}"
+        //                    name="images">`);
+        //    div.prepend(inputFile);
+
+        //    inputFile.click();
+        //    inputFile.on("change", function (e) {
+        //        console.log(e.target.files[0].name);
+        //        let content =
+        //            `
+        //            <img src="${URL.createObjectURL(e.target.files[0])}"
+        //                 width="100%" alt="обране фото"
+        //                 style="cursor: pointer"
+        //                 id="btnAddImage">
+        //        `;
+        //        let btnDelete = $(`<button class="btn-close"></button>`);
+        //        div.prepend(content);
+        //        div.prepend(btnDelete);
+        //        $("#contentImage").prepend(div);
+        //        btnDelete.on('click', function (e) {
+        //            e.preventDefault();
+        //            $(this).closest("div").remove();
+        //            console.log("remove");
+        //        });
+        //    });
+        
+        
+
+
+
+
+
+
+
+
+
+
+    });
+</script>
+}
+

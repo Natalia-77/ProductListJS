@@ -170,3 +170,5 @@ D:\Natalia\Project1\ProductListJS\ProductList\ProductList\obj\Debug\net5.0\ref\P
 D:\Natalia\Project1\ProductListJS\ProductList\ProductList\obj\Debug\net5.0\ProductList.pdb
 D:\Natalia\Project1\ProductListJS\ProductList\ProductList\obj\Debug\net5.0\ProductList.genruntimeconfig.cache
 D:\Natalia\Project1\ProductListJS\ProductList\ProductList\bin\Debug\net5.0\libman.json
+D:\Natalia\Project1\ProductListJS\ProductList\ProductList\obj\Debug\net5.0\Razor\Views\Home\Create.cshtml.g.cs
+D:\Natalia\Project1\ProductListJS\ProductList\ProductList\obj\Debug\net5.0\Razor\Views\Home\Delete.cshtml.g.cs
