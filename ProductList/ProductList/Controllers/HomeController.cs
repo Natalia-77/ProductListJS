@@ -97,9 +97,10 @@ namespace ProductList.Controllers
             var result = _context.ProductImages.Where(c => c.ProductId == id).ToList();
 
             ProductImageToDelete delete = new();
-
-            delete.productViewModels = result;
-            
+            delete.Id = prodTodelete.Id;
+            delete.Name = prodTodelete.Name;
+            delete.Price = prodTodelete.Price;
+            delete.productViewModels = result;            
 
             if (prodTodelete != null)
             {
