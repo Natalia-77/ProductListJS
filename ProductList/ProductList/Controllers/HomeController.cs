@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ProductList.Domain;
@@ -134,12 +135,12 @@ namespace ProductList.Controllers
             
             var resitem = _context.Products.FirstOrDefault(x => x.Id == id);
             var resimageitem = _context.ProductImages.Where(c => c.ProductId == id).ToList();
-
+           
             ProductImageToEdit modeledit = new();
             modeledit.Id = resitem.Id;
             modeledit.Name = resitem.Name;
-            modeledit.Price = resitem.Price;
-            modeledit.Image = resimageitem;
+            modeledit.Price = resitem.Price;           
+            modeledit.productImages = resimageitem;
 
             if (resitem != null)
             {
@@ -159,18 +160,18 @@ namespace ProductList.Controllers
                 itemProd.Name = modeledit.Name;
                 itemProd.Price = modeledit.Price;                
 
-                string fileName = string.Empty;
-                foreach (var item in modeledit.Image)
-                {
-                    string ext = Path.GetExtension(item.Name);
-                    fileName = Path.GetRandomFileName() + ext;
+                //string fileName = string.Empty;
+                //foreach (var item in modeledit.Image)
+                //{
+                //    string ext = Path.GetExtension(item.Name);
+                //    fileName = Path.GetRandomFileName() + ext;
 
-                    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "products", fileName);
-                    using (var stream = System.IO.File.Create(filePath))
-                    {
-                        item.CopyTo(stream);
-                    }                  
-                }
+                //    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "products", fileName);
+                //    using (var stream = System.IO.File.Create(filePath))
+                //    {
+                //        item.CopyTo(stream);
+                //    }                  
+                //}
 
 
                 

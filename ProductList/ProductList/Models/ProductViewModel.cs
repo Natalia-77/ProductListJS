@@ -35,7 +35,8 @@ namespace ProductList.Models
         public string Name { get; set; }
         public decimal Price { get; set; }
         public List<ProductImage> productImages { get; set; }
-        public List<IFormFile> Image { get; set; }
+        public string Namefile { get; set; }
+       // public List<ProductImage> Image { get; set; }
     }
 
 
