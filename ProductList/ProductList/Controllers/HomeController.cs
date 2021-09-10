@@ -126,6 +126,64 @@ namespace ProductList.Controllers
             return NotFound();
         }
 
+        #region Edit
+        [HttpGet]
+        
+        public IActionResult Edit(int id)
+        {
+            
+            var resitem = _context.Products.FirstOrDefault(x => x.Id == id);
+            var resimageitem = _context.ProductImages.Where(c => c.ProductId == id).ToList();
+
+            ProductImageToEdit modeledit = new();
+            modeledit.Id = resitem.Id;
+            modeledit.Name = resitem.Name;
+            modeledit.Price = resitem.Price;
+            modeledit.Image = resimageitem;
+
+            if (resitem != null)
+            {
+                return View(modeledit);
+            }
+            return NotFound();            
+        }
+
+        [HttpPost]       
+        public async Task<IActionResult> Edit(int id, ProductImageToEdit modeledit)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var itemProd = _context.Products.FirstOrDefault(x => x.Id == id);
+
+                itemProd.Name = modeledit.Name;
+                itemProd.Price = modeledit.Price;                
+
+                string fileName = string.Empty;
+                foreach (var item in modeledit.Image)
+                {
+                    string ext = Path.GetExtension(item.Name);
+                    fileName = Path.GetRandomFileName() + ext;
+
+                    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "products", fileName);
+                    using (var stream = System.IO.File.Create(filePath))
+                    {
+                        item.CopyTo(stream);
+                    }                  
+                }
+
+
+                
+
+
+               
+                _context.SaveChanges();
+
+            }
+            return RedirectToAction("Index");
+        }
+        #endregion
+
 
 
 

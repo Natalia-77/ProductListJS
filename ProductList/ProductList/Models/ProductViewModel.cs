@@ -29,6 +29,16 @@ namespace ProductList.Models
         public List<ProductImage> productViewModels { get; set; }
     }
 
+    public class ProductImageToEdit
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public List<ProductImage> productImages { get; set; }
+        public List<IFormFile> Image { get; set; }
+    }
+
+
     public class AddProductViewModel
     {
         [Display(Name="Назва")]
