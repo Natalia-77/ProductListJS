@@ -24,11 +24,18 @@
                 <label asp-for="Image" class="control-label"></label>
                 <div>
                     <div class="col mb-3">
-                        <div class="row" id="contentImage">
-                            @foreach (var item in Model.productImages)
-                            {
-                                <img src="/images/@item.Name" class="col-md-2 mb-2 mt-2" />
-                            }
+                        <div class="row " id="contentImage">
+                            
+                                @foreach (var item in Model.productImages)
+
+                                 {    <div class="col-md-4">
+                                            <span class="file-delete"
+                                                  style="transform: rotate(45deg)"><span>+</span></span>
+                                            <img src="/images/@item.Name" width="200px" />
+                                   
+                                      </div>
+                                 }
+                            
                         </div>
                     </div>
                 </div>               
@@ -88,13 +95,13 @@
                             for (var i = 0; i < e.target.files.length; i++)
                             {
 
-                                let $div = $(`<div class="col-md-2"> `);
+                                let $div = $(`<div class="col-md-3 mb-2 mt-2"> `);
                                     let $span = $(` <span class="file-delete" style="transform: rotate(45deg)"><span>+</span></span>`);
                                     let $content = $(`<img src="${URL.createObjectURL(e.target.files[i])}"
-                                                           width="100%"/>`);
-                                    $div.prepend($span);
+                                                           width="100%" />`);
+                                    $div.append($span);
                                     $div.prepend($content);
-                                    $("#contentImage").prepend($div);
+                                    $("#contentImage").append($div);
 
                                     $span.on('click', function (e) {
                                         e.preventDefault();
