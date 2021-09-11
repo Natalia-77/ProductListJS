@@ -194,6 +194,24 @@ namespace ProductList.Controllers
                     }
                 }
 
+                //якщо є фото,які видаляли.
+                if(modeledit.delImage!=null)
+                {
+                    string pathToDel = Path.Combine(Directory.GetCurrentDirectory(), "products");
+                    //кожне фото з ліста...
+                    foreach (var item in modeledit.delImage)
+                    {
+                        var itemImage = _context.ProductImages.FirstOrDefault(x => x.Name == item);
+                        string fullPath = Path.Combine(pathToDel, itemImage.Name);
+                        if (System.IO.File.Exists(fullPath))
+                        {
+                            System.IO.File.Delete(fullPath);
+                        }
+                        _context.ProductImages.Remove(itemImage);
+                    }
+
+                }
+
                 
                 _context.ProductImages.AddRange(images);
                 _context.SaveChanges();                

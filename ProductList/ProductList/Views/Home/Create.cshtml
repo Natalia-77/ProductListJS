@@ -90,6 +90,11 @@
                     $span.on('click', function (e) {
                         e.preventDefault();
                         $(this).closest("div").remove();
+                        let $filedel = $(`<input type="file" data-files style="display:none" multiple 
+                            class="form-control"
+                            id="${imageName}"
+                            name="images">`);
+                        $("#contentImage").prepend($filedel);
                     });
                    
                 }                

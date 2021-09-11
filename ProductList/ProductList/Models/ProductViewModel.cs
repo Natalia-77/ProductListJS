@@ -36,6 +36,7 @@ namespace ProductList.Models
         public decimal Price { get; set; }
         public List<ProductImage> productImages { get; set; }      
         public List<IFormFile> Image { get; set; }//це для фото,які ми будемо додавати на вьюшці едіта.
+        public List<string> delImage { get; set; }//це для фото,які ми будемо видаляти на вьюшці едіта.
     }
 
 
