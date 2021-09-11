@@ -95,12 +95,12 @@
                             for (var i = 0; i < e.target.files.length; i++)
                             {
 
-                                let $div = $(`<div class="col-md-3 mb-2 mt-2"> `);
+                                let $div = $(`<div class="col-md-4"> `);
                                     let $span = $(` <span class="file-delete" style="transform: rotate(45deg)"><span>+</span></span>`);
                                     let $content = $(`<img src="${URL.createObjectURL(e.target.files[i])}"
                                                            width="100%" />`);
                                     $div.append($span);
-                                    $div.prepend($content);
+                                    $div.append($content);
                                     $("#contentImage").append($div);
 
                                     $span.on('click', function (e) {
