@@ -24,23 +24,18 @@
                 <label asp-for="Image" class="control-label"></label>
                 <div>
                     <div class="col mb-3">
-                        <div class="row">
+                        <div class="row" id="contentImage">
                             @foreach (var item in Model.productImages)
                             {
                                 <img src="/images/@item.Name" class="col-md-2 mb-2 mt-2" />
                             }
                         </div>
                     </div>
-
-                </div>
-                @*<input asp-for="Image" type="file"
-                           class="form-control"
-                           onchange="document.getElementById('profilePicture').src = window.URL.createObjectURL(this.files[0])">
-                    <span asp-validation-for="Image" class="text-danger"></span>*@
+                </div>               
             </div>
             <div class="mb-3">
                 <label asp-for="Image" class="form-label">Фото,які ви додаєте:</label>
-                <div class="row" id="contentImage">
+                <div class="row" >
                     <div class="col-md-2">
                         <img src="/img/addbtni.jpg"
                              id="btnAddImage"
