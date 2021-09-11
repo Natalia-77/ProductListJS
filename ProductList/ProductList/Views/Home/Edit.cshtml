@@ -1,0 +1,121 @@
+﻿@model ProductList.Models.ProductImageToEdit
+@{
+    ViewData["Title"] = "Редагування даних ";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <div>
+                    <div class="col mb-3">
+                        <div class="row">
+                            @foreach (var item in Model.productImages)
+                            {
+                                <img src="/images/@item.Name" class="col-md-2 mb-2 mt-2" />
+                            }
+                        </div>
+                    </div>
+
+                </div>
+                @*<input asp-for="Image" type="file"
+                           class="form-control"
+                           onchange="document.getElementById('profilePicture').src = window.URL.createObjectURL(this.files[0])">
+                    <span asp-validation-for="Image" class="text-danger"></span>*@
+            </div>
+            <div class="mb-3">
+                <label asp-for="Image" class="form-label">Фото,які ви додаєте:</label>
+                <div class="row" id="contentImage">
+                    <div class="col-md-2">
+                        <img src="/img/addbtni.jpg"
+                             id="btnAddImage"
+                             style="cursor:pointer"
+                             width="100%" />
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Зберегти зміни" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Styles{
+    <link href="~/css/style.css" rel="stylesheet" />
+}
+
+
+
+@section Scripts{
+
+    <script>
+
+        window.addEventListener("load", async function () {
+        let id = 1;
+        $("#btnAddImage").on("click", function () {
+        let imageName = "image" + id;
+        id++;
+        let $file = $(`<input type="file" data-files style="display:none" multiple
+                              class="form-control"
+                              id="${imageName}"
+                              name="Image">`);
+        $("#contentImage").prepend($file);
+
+        document.getElementById(imageName).click();
+        document.getElementById(imageName).onchange = function (e) {
+
+        for (var i = 0; i < e.target.files.length; i++) {
+
+        let $div = $(`<div class="col-md-2">
+            `);
+            let $span = $(` <span class="file-delete" style="transform: rotate(45deg)"><span>+</span></span>`);
+            let $content = $(`<img src="${URL.createObjectURL(e.target.files[i])}"
+                                   width="100%"/>`);
+            $div.prepend($span);
+            $div.prepend($content);
+            $("#contentImage").prepend($div);
+
+            $span.on('click', function (e) {
+            e.preventDefault();
+            $(this).closest("div").remove();
+            });
+
+            }
+
+            };
+
+            });
+
+});
+
+</script>
+
+
+}
+
+
+
+

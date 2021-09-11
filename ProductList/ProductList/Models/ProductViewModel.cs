@@ -34,9 +34,8 @@ namespace ProductList.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
-        public List<ProductImage> productImages { get; set; }
-        public string Namefile { get; set; }
-       // public List<ProductImage> Image { get; set; }
+        public List<ProductImage> productImages { get; set; }      
+        public List<IFormFile> Image { get; set; }//це для фото,які ми будемо додавати на вьюшці едіта.
     }
 
 

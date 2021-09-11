@@ -139,7 +139,7 @@ namespace ProductList.Controllers
             ProductImageToEdit modeledit = new();
             modeledit.Id = resitem.Id;
             modeledit.Name = resitem.Name;
-            modeledit.Price = resitem.Price;           
+            modeledit.Price = resitem.Price;         
             modeledit.productImages = resimageitem;
 
             if (resitem != null)
@@ -153,32 +153,56 @@ namespace ProductList.Controllers
         public async Task<IActionResult> Edit(int id, ProductImageToEdit modeledit)
         {
 
+            if(!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Дані введені не вірно");
+                return View(modeledit);
+            }
+
             if (ModelState.IsValid)
             {
                 var itemProd = _context.Products.FirstOrDefault(x => x.Id == id);
-
+                //var product = _context.Products.Include(x => x.ProductImages).FirstOrDefault(x => x.Id == modeledit.Id);
                 itemProd.Name = modeledit.Name;
-                itemProd.Price = modeledit.Price;                
+                itemProd.Price = modeledit.Price;               
 
-                //string fileName = string.Empty;
-                //foreach (var item in modeledit.Image)
-                //{
-                //    string ext = Path.GetExtension(item.Name);
-                //    fileName = Path.GetRandomFileName() + ext;
+                string fileName = string.Empty;
+                List<ProductImage> images = new List<ProductImage>();
 
-                //    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "products", fileName);
-                //    using (var stream = System.IO.File.Create(filePath))
-                //    {
-                //        item.CopyTo(stream);
-                //    }                  
-                //}
+
+                //якщо нові фото додавали:
+                if (modeledit.Image!=null)
+                {
+                    foreach (var item in modeledit.Image)
+                    {
+                        string ext = Path.GetExtension(item.FileName);
+                        fileName = Path.GetRandomFileName() + ext;
+
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "products", fileName);
+                        using (var stream = System.IO.File.Create(filePath))
+                        {
+                            await item.CopyToAsync(stream);
+                        }
+
+                        ProductImage pImage = new ProductImage
+                        {
+                            Name = fileName,
+                            Product = itemProd
+                        };
+                        images.Add(pImage);
+
+                    }
+                }
+
+                
+                _context.ProductImages.AddRange(images);
+                _context.SaveChanges();
+
+
+
 
 
                 
-
-
-               
-                _context.SaveChanges();
 
             }
             return RedirectToAction("Index");
