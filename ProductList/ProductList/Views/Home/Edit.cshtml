@@ -26,18 +26,14 @@
                     <div class="col mb-3">
                         <div class="row " id="contentImage">       
                            
-                            @{ 
-                                int id = 1;
-                               
-                            }
+                           
                                 @foreach (var item in Model.productImages)
                                 {
-                                    var names = "images" + id;
-                                    id++;
-                                    <div class="col-md-4 mt-2" id="names" >
+                                    
+                                    <div class="col-md-4 mt-2"  >
                                             <span class="file-delete del" 
                                                   style="transform: rotate(45deg)"><span>+</span></span>
-                                            <img src="/images/@item.Name" width="200px" />
+                                            <img src="/images/@item.Name" width="200px"  />
                                    
                                       </div>
                                  }
@@ -119,7 +115,7 @@
                     };
 
             });
-            var img1 = document.getElementsByClassName("ima");
+            
 
             var elements = document.querySelectorAll(".del");
             for (var i = 0; i < elements.length; i++) {
@@ -131,13 +127,15 @@
                                       class="form-control"
                                       id="${imageNames}"
                                       name="delImage">`);
+                   
+                                       
                     $("#contentImage").prepend($file);
                     e.preventDefault();
                     $(this).closest("div").remove();
-                   // alert("ASPAS");
+                   
                 };
             }
-
+           
             
             
 
