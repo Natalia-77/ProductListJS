@@ -73,45 +73,48 @@
 
     <script>
 
-        window.addEventListener("load", async function () {
-        let id = 1;
-        $("#btnAddImage").on("click", function () {
-        let imageName = "image" + id;
-        id++;
-        let $file = $(`<input type="file" data-files style="display:none" multiple
-                              class="form-control"
-                              id="${imageName}"
-                              name="Image">`);
-        $("#contentImage").prepend($file);
+        window.addEventListener("load", async function ()
+        {
+                 let id = 1;
+            $("#btnAddImage").on("click", function ()
+            {
+                let imageName = "image" + id;
+                id++;
+                let $file = $(`<input type="file" data-files style="display:none" multiple
+                                      class="form-control"
+                                      id="${imageName}"
+                                      name="Image">`);
+                $("#contentImage").prepend($file);
 
-        document.getElementById(imageName).click();
-        document.getElementById(imageName).onchange = function (e) {
+                    document.getElementById(imageName).click();
+                    document.getElementById(imageName).onchange = function (e)
+                    {
 
-        for (var i = 0; i < e.target.files.length; i++) {
+                            for (var i = 0; i < e.target.files.length; i++)
+                            {
 
-        let $div = $(`<div class="col-md-2">
-            `);
-            let $span = $(` <span class="file-delete" style="transform: rotate(45deg)"><span>+</span></span>`);
-            let $content = $(`<img src="${URL.createObjectURL(e.target.files[i])}"
-                                   width="100%"/>`);
-            $div.prepend($span);
-            $div.prepend($content);
-            $("#contentImage").prepend($div);
+                                let $div = $(`<div class="col-md-2"> `);
+                                    let $span = $(` <span class="file-delete" style="transform: rotate(45deg)"><span>+</span></span>`);
+                                    let $content = $(`<img src="${URL.createObjectURL(e.target.files[i])}"
+                                                           width="100%"/>`);
+                                    $div.prepend($span);
+                                    $div.prepend($content);
+                                    $("#contentImage").prepend($div);
 
-            $span.on('click', function (e) {
-            e.preventDefault();
-            $(this).closest("div").remove();
+                                    $span.on('click', function (e) {
+                                        e.preventDefault();
+                                        $(this).closest("div").remove();
+                                    });
+
+                            }
+
+                    };
+
             });
 
-            }
+        });
 
-            };
-
-            });
-
-});
-
-</script>
+    </script>
 
 
 }

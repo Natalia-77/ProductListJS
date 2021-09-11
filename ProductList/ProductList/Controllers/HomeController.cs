@@ -162,7 +162,7 @@ namespace ProductList.Controllers
             if (ModelState.IsValid)
             {
                 var itemProd = _context.Products.FirstOrDefault(x => x.Id == id);
-                //var product = _context.Products.Include(x => x.ProductImages).FirstOrDefault(x => x.Id == modeledit.Id);
+                
                 itemProd.Name = modeledit.Name;
                 itemProd.Price = modeledit.Price;               
 
@@ -196,13 +196,7 @@ namespace ProductList.Controllers
 
                 
                 _context.ProductImages.AddRange(images);
-                _context.SaveChanges();
-
-
-
-
-
-                
+                _context.SaveChanges();                
 
             }
             return RedirectToAction("Index");
